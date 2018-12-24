@@ -1,7 +1,7 @@
 # vue-diff-code
 
 1、启动项目 
-cd /{youproject}/app
+cd /{youproject}/
 npm install
 npm run start
 
