@@ -7,21 +7,26 @@
         <p>{{errMsg}}}</p>
       </Modal>
       <div class="input_wapper">
-        <Input v-model="uriInput1">
-        <Select slot="prepend" style="width: 80px" v-model="mothod">
-          <Option value="get">GET</Option>
-          <Option value="post">POST</Option>
-        </Select>
-        </Input>
+        <div style="flex:1">
+          <Input v-model="uriInput1">
+            <Select slot="prepend" style="width: 80px" v-model="mothod">
+              <Option value="get">GET</Option>
+              <Option value="post">POST</Option>
+            </Select>
+          </Input>
+        </div>
         <Button class="send_button" type="primary" @click="send" :loading="loading">SEND</Button>
       </div>
-      <div class="input_wapper2">
-        <Input v-model="uriInput2">
-        <Select slot="prepend" style="width: 80px" v-model="mothod">
-          <Option value="get">GET</Option>
-          <Option value="post">POST</Option>
-        </Select>
-        </Input>
+      <div class="input_wapper1">
+        <div style="flex:1">
+          <Input v-model="uriInput2">
+          <Select slot="prepend" style="width: 80px" v-model="mothod">
+            <Option value="get">GET</Option>
+            <Option value="post">POST</Option>
+          </Select>
+          </Input>
+        </div>
+        <Button class="send_button" type="primary" @click="help" :loading="loading">帮助</Button>
       </div>
       <div class="tab_wapper">
         <Tabs value="tab1" @on-click="tabChange">
