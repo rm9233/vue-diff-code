@@ -3,9 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import {Button, Input, Option, Select, Tabs, TabPane, Split, Table, Icon, Modal} from 'iview'
+import {Button, Input, Option, Select, Tabs, TabPane, Split, Table, Icon, Modal, Tooltip} from 'iview'
 import KInput from './common/KInput';
-import 'iview/dist/styles/iview.css'
+import 'iview/dist/styles/iview.css';
+import CodeMirror from './components/CodeMirror'
 
 Vue.component('KInput',KInput)
 Vue.component('Button', Button)
@@ -18,6 +19,8 @@ Vue.component('Split', Split)
 Vue.component('Table', Table)
 Vue.component('Icon', Icon)
 Vue.component('Modal',Modal)
+Vue.component('Tooltip',Tooltip)
+Vue.component("codemirror", CodeMirror)
 
 Vue.config.productionTip = false
 

@@ -12,7 +12,7 @@ function resolve (dir) {
 //   test: /\.(js|vue)$/,
 //   loader: 'eslint-loader',
 //   enforce: 'pre',
-//   include: [resolve('src'), resolve('test')],
+//   include: [resolve('code-mirror'), resolve('test')],
 //   options: {
 //     formatter: require('eslint-friendly-formatter'),
 //     emitWarning: !config.dev.showEslintErrorsInOverlay

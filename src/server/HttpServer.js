@@ -60,8 +60,11 @@ let mHeader = (req,type) => {
       if(type == 2 && a[i].key == "token2"){
         a[i].key = "Authorization";
       }
-      if (type == 1 && a[i].key == "env"){
-        continue;
+      if (type == 1 && a[i].key == "env1"){
+          a[i].key = "env";
+      }
+      if (type == 2 && a[i].key == "env2"){
+            a[i].key = "env";
       }
       h[a[i].key] = a[i].value;
     }
@@ -161,7 +164,7 @@ app.post('/proxy', (req, res, next) => {
   let c2 = client(req, req.body.uri2);
   let option1 = mOption(c1, req,1);
   let option2 = mOption(c2, req,2);
-  //console.log(option1);
+  console.log(option1);
   fetch([c1, c2], [option1, option2], req);
 })
 
