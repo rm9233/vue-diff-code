@@ -314,13 +314,18 @@
                 return res;
             },
             send() {
+                let exp = /^(http:\/\/|https:\/\/)+(.+)(\/.*)/;
                 if (this.uriInput1 == "" && this.uriInput2 == "") {
                     this.modal = true;
                     this.errTitle = "请求地址为空";
                     this.errMsg = "请求地址不能为空哦..";
-                } else {
-                    this.loading = true;
+                } else if(exp.test(this.uriInput1) == false || exp.test(this.uriInput2) == false){
+                    this.modal = true;
+                    this.errTitle = "请求地址错误";
+                    this.errMsg = "请求地址不是一个正确的接口地址..";
+                }else{
 
+                    this.loading = true;
                     HttpUtils.send(this.uriInput1, this.uriInput2, this.mothod, this.data1, this.data2, this.jsonStr, (res) => {
                         this.loading = false;
                         this.uri1Res = this.jsonFormate(res, 1);
