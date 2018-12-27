@@ -32,7 +32,7 @@ let mPort = (protocol)=>{
 
 let client = (req, uri) => {
   let h = null;
-  let exp = /^(http:\/\/|https:\/\/)+(.+)(\/.*)/;
+  let exp = /^(http:\/\/|https:\/\/)?(.[^\/]+)(\/.*)/;
   let match = uri.match(exp);
   match[1] == "http://" ? h = http : h = https;
   let host = match[1] + match[2];
