@@ -8,7 +8,7 @@
             </Modal>
             <div class="input_wapper">
                 <div style="flex:1">
-                    <Input v-model="uriInput1">
+                    <Input v-model="uriInput1" placeholder="请填写正确地址 http:// * / *">
                     <Select slot="prepend" style="width: 80px" v-model="mothod">
                         <Option value="get">GET</Option>
                         <Option value="post">POST</Option>
@@ -19,7 +19,7 @@
             </div>
             <div class="input_wapper">
                 <div style="flex:1">
-                    <Input v-model="uriInput2">
+                    <Input v-model="uriInput2" placeholder="请填写正确地址 http:// * / *">
                     <Select slot="prepend" style="width: 80px" v-model="mothod">
                         <Option value="get">GET</Option>
                         <Option value="post">POST</Option>
@@ -203,7 +203,7 @@
                         return h('KInput', {
                             props: {
                                 clearable: "clearable",
-                                placeholder: "key",
+                                placeholder: "内置参数:token1 token2 env1 env2",
                                 model: this.data2[params.index],
                                 type: "key"
                             }
