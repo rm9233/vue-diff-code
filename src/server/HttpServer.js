@@ -178,4 +178,4 @@ app.all('*', function (req, res, next) {
   next();
 });
 
-app.listen(3334, () => console.log('Example app listening on port 8081!'))
+app.listen(3334, () => console.log('Example app listening on port 3334!'))
