@@ -158,14 +158,14 @@ let fetch = (clients, options, req, res) => {
 
 app.post('/proxy', (req, res, next) => {
 
-  cros(res);
-  httpRes = res;
-  let c1 = client(req, req.body.uri1);
-  let c2 = client(req, req.body.uri2);
-  let option1 = mOption(c1, req,1);
-  let option2 = mOption(c2, req,2);
-  console.log(option1);
-  fetch([c1, c2], [option1, option2], req);
+    cros(res);
+    httpRes = res;
+    let c1 = client(req, req.body.uri1);
+    let c2 = client(req, req.body.uri2);
+    let option1 = mOption(c1, req,1);
+    let option2 = mOption(c2, req,2);
+    console.log(option1);
+    fetch([c1, c2], [option1, option2], req);
 })
 
 
