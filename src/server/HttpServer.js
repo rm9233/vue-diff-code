@@ -2,7 +2,6 @@ var express = require('express')
 var path = require('path');
 var http = require('http');
 var https = require('https');
-import config from "../config/Config";
 var url = require('url');
 var bodyParser = require('body-parser');//用于req.body获取值的
 var FormData = require('form-data');
@@ -179,4 +178,4 @@ app.all('*', function (req, res, next) {
   next();
 });
 
-app.listen(config.proxyProt, () => console.log('Example app listening on port 8081!'))
+app.listen(3334, () => console.log('Example app listening on port 8081!'))
