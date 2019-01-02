@@ -34,7 +34,7 @@ export default {
     let data = makePackage(uri1,uri2,method,params,header,jsonStr);
     console.log(data);
     let option = {
-      hostname: url.parse(Config.proxyHost).hostname,
+      hostname: url.parse(Config.Host).hostname,
       path: "/proxy",
       port: Config.proxyProt,
       method: "post",
