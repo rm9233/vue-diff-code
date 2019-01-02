@@ -1,4 +1,4 @@
 export default {
   proxyHost:"http://localhost",
-  proxyProt:"3334"
+  proxyProt:"23456"
 }
