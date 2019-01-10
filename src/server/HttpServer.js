@@ -36,7 +36,7 @@ let client = (req, uri) => {
   let match = uri.match(exp);
   match[1] == "http://" ? h = http : h = https;
   let host = match[1] + match[2];
-  let port = mPort(match[1])
+  let port = url.parse(uri).port ? url.parse(uri).port: mPort(match[1]);
   let path1 = match[3];
   return {
     client: h,
@@ -162,6 +162,8 @@ app.post('/proxy', (req, res, next) => {
     httpRes = res;
     let c1 = client(req, req.body.uri1);
     let c2 = client(req, req.body.uri2);
+    console.log(c1);
+    console.log(c2);
     let option1 = mOption(c1, req,1);
     let option2 = mOption(c2, req,2);
     console.log(option1);
