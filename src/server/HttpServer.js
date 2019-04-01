@@ -109,7 +109,7 @@ let mOption = (c, req , type) => {
   } else {
     option.headers = mHeader(req,type);
     if (jsonstr != "") {
-      console.log(option.headers);
+      //console.log(option.headers);
       option.headers['Content-Type'] = 'application/json; charset=utf-8';
       option.headers['Content-Length'] = Buffer.byteLength(jsonstr);
     }
@@ -128,13 +128,20 @@ let fetch = (clients, options, req, res) => {
       if (index == 0) {
         index = 1;
         url1res = body;
-        console.log(body);
+        //console.log (body);
         fetch(clients, options, req);
       } else {
+
         httpRes.send({
           first: url1res,
           second: body
         });
+        console.log("返回的内容");
+        console.log({
+            first: url1res,
+            second: body
+        });
+          console.log("返回的内容 结束");
         url1res = "";
         index = 0;
         httpRes.end();
@@ -162,11 +169,11 @@ app.post('/proxy', (req, res, next) => {
     httpRes = res;
     let c1 = client(req, req.body.uri1);
     let c2 = client(req, req.body.uri2);
-    console.log(c1);
-    console.log(c2);
+    // console.log(c1);
+    // console.log(c2);
     let option1 = mOption(c1, req,1);
     let option2 = mOption(c2, req,2);
-    console.log(option1);
+    //console.log(option1);
     fetch([c1, c2], [option1, option2], req);
 })
 

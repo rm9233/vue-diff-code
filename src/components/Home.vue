@@ -1,76 +1,94 @@
 <template>
-    <div class="container">
-        <div>
-            <Modal
-                    v-model="modal"
-                    :title="this.errTitle">
-                <p>{{errMsg}}}</p>
-            </Modal>
-            <div class="input_wapper">
-                <div style="flex:1">
-                    <Input v-model="uriInput1" placeholder="请填写正确地址 http:// * / *">
-                    <Select slot="prepend" style="width: 80px" v-model="mothod">
-                        <Option value="get">GET</Option>
-                        <Option value="post">POST</Option>
-                    </Select>
-                    </Input>
-                </div>
-                <Button class="send_button" type="primary" @click="send" :loading="loading">SEND</Button>
-            </div>
-            <div class="input_wapper">
-                <div style="flex:1">
-                    <Input v-model="uriInput2" placeholder="请填写正确地址 http:// * / *">
-                    <Select slot="prepend" style="width: 80px" v-model="mothod">
-                        <Option value="get">GET</Option>
-                        <Option value="post">POST</Option>
-                    </Select>
-                    </Input>
-                </div>
-                <Tooltip placement="top">
-                    <Button class="send_button" icon="ios-alert-outline"></Button>
-                    <div slot="content">
-                        <p>header中，可以使用token1,</p>
-                        <p>token2 分别对应第一个url</p>
-                        <p>和第二个url的authorization。</p>
-                        <p>env1 和 env2 分别对应</p>
-                        <p>url1和url2中所对应的环境</p>
+    <Layout>
+        <Sider hide-trigger>
+            <div class="nav">
+                <div class="subnav">历史记录 <i/></div>
+                <div class="historyWapper">
+                    <div class="history" v-for="r in record" @click="changeUrl(r)">
+                        <div>接口地址1:{{r.uriInput1}}</div>
+                        <div>接口地址2:{{r.uriInput2}}/</div>
+                        <div>访问时间:{{new Date(r.times).toLocaleDateString()}}</div>
                     </div>
-                </Tooltip>
+                </div>
+
             </div>
-            <div class="tab_wapper">
-                <Tabs value="tab1" @on-click="tabChange">
-                    <TabPane label="Params" name="tab1">
-                        <div>
-                            <Table :columns="columns1" :data="data1"></Table>
+
+        </Sider>
+        <Content>
+            <div class="container">
+                <div class="content">
+                    <Modal
+                            v-model="modal"
+                            :title="this.errTitle">
+                        <p>{{errMsg}}}</p>
+                    </Modal>
+                    <div class="input_wapper">
+                        <div style="flex:1">
+                            <Input v-model="uriInput1" placeholder="请填写正确地址 http:// * / *">
+                            <Select slot="prepend" style="width: 80px" v-model="mothod">
+                                <Option value="get">GET</Option>
+                                <Option value="post">POST</Option>
+                            </Select>
+                            </Input>
                         </div>
-                    </TabPane>
-                    <TabPane label="Header" name="tab2">
-                        <div>
-                            <Table :columns="columns2" :data="data2"></Table>
+                        <Button class="send_button" type="primary" @click="send" :loading="loading">SEND</Button>
+                    </div>
+                    <div class="input_wapper">
+                        <div style="flex:1">
+                            <Input v-model="uriInput2" placeholder="请填写正确地址 http:// * / *">
+                            <Select slot="prepend" style="width: 80px" v-model="mothod">
+                                <Option value="get">GET</Option>
+                                <Option value="post">POST</Option>
+                            </Select>
+                            </Input>
                         </div>
-                    </TabPane>
-                    <TabPane label="Body" name="tab3">
-                        <Input type="textarea" :rows="4" placeholder="Enter Json String..." v-model="jsonStr"/>
-                    </TabPane>
-                </Tabs>
-            </div>
-            <div class="context_wapper">
-                <h5 style="margin: 30px 0">Res Compare</h5>
-                <div>
-                    <code-diff :old-string="uri1Res" :new-string="uri2Res" :context="10" outputFormat="side-by-side"/>
+                        <Tooltip placement="top">
+                            <Button class="send_button" icon="ios-alert-outline"></Button>
+                            <div slot="content">
+                                <p>header中，可以使用token1,</p>
+                                <p>token2 分别对应第一个url</p>
+                                <p>和第二个url的authorization。</p>
+                                <p>env1 和 env2 分别对应</p>
+                                <p>url1和url2中所对应的环境</p>
+                            </div>
+                        </Tooltip>
+                    </div>
+                    <div class="tab_wapper">
+                        <Tabs value="tab1" @on-click="tabChange">
+                            <TabPane label="Params" name="tab1">
+                                <div>
+                                    <Table :columns="columns1" :data="data1"></Table>
+                                </div>
+                            </TabPane>
+                            <TabPane label="Header" name="tab2">
+                                <div>
+                                    <Table :columns="columns2" :data="data2"></Table>
+                                </div>
+                            </TabPane>
+                            <TabPane label="Body" name="tab3">
+                                <Input type="textarea" :rows="4" placeholder="Enter Json String..." v-model="jsonStr"/>
+                            </TabPane>
+                        </Tabs>
+                    </div>
+                    <div class="context_wapper">
+                        <h5 style="margin: 30px 0">Res Compare</h5>
+                        <div>
+                            <code-diff :old-string="uri1Res" :new-string="uri2Res" :context="10" outputFormat="side-by-side"/>
+                        </div>
+                        <h5 style="margin: 30px 0">Res Body</h5>
+                        <Split>
+                            <div slot="left" class="demo-split-pane">
+                                <codemirror :options="cmOptions" :value="uri1Res"></codemirror>
+                            </div>
+                            <div slot="right" class="demo-split-pane">
+                                <codemirror :options="cmOptions" :value="uri2Res"></codemirror>
+                            </div>
+                        </Split>
+                    </div>
                 </div>
-                <h5 style="margin: 30px 0">Res Body</h5>
-                <Split>
-                    <div slot="left" class="demo-split-pane">
-                        <codemirror :options="cmOptions"  :value="uri1Res"></codemirror>
-                    </div>
-                    <div slot="right" class="demo-split-pane">
-                        <codemirror :options="cmOptions" :value="uri2Res"></codemirror>
-                    </div>
-                </Split>
             </div>
-        </div>
-    </div>
+        </Content>
+    </Layout>
 </template>
 <script>
 
@@ -92,8 +110,12 @@
     }
     export default {
         components: {codeDiff},
+        mounted(){
+            this.record = window.localStorage.getItem('record') ? JSON.parse(window.localStorage.getItem('record')) :[];
+        },
         data() {
             return {
+                record: [],
                 cmOptions: {
                     mode: {
                         name: 'javascript',
@@ -104,8 +126,8 @@
                     lineNumbers: true,
                     theme: 'base16-dark',
                     autoCloseBrackets: true,
-                    readOnly:true,
-                    value:"aaa"
+                    readOnly: true,
+                    value: "aaa"
                 },
                 uri1Res: '',
                 uri2Res: '',
@@ -319,12 +341,26 @@
                     this.modal = true;
                     this.errTitle = "请求地址为空";
                     this.errMsg = "请求地址不能为空哦..";
-                } else if(exp.test(this.uriInput1) == false || exp.test(this.uriInput2) == false){
+                } else if (exp.test(this.uriInput1) == false || exp.test(this.uriInput2) == false) {
                     this.modal = true;
                     this.errTitle = "请求地址错误";
                     this.errMsg = "请求地址不是一个正确的接口地址..";
-                }else{
+                } else {
 
+                    let times = new Date().getTime();
+                    let record = {
+                        uriInput1:this.uriInput1,
+                        uriInput2:this.uriInput2,
+                        mothod:this.mothod,
+                        data1:this.data1,
+                        data2:this.data2,
+                        jsonStr:this.jsonStr,
+                        times:times
+                    }
+                    let lr = window.localStorage.getItem('record') ? JSON.parse(window.localStorage.getItem('record')) :[];
+                    lr.push(record);
+                    window.localStorage.setItem('record',JSON.stringify(lr));
+                    this.record.push(record);
                     this.loading = true;
                     HttpUtils.send(this.uriInput1, this.uriInput2, this.mothod, this.data1, this.data2, this.jsonStr, (res) => {
                         this.loading = false;
@@ -354,6 +390,14 @@
             },
             tabChange(index) {
                 tabIndex = index;
+            },
+            changeUrl(r){
+                this.uriInput1 = r.uriInput1;
+                this.uriInput2 = r.uriInput2;
+                this.mothod = r.mothod;
+                this.data1 = r.data1;
+                this.data2 = r.data2;
+                this.jsonStr = r.jsonStr;
             }
         }
 
@@ -366,8 +410,19 @@
         padding: 0;
         margin: 0;
     }
+    html,body{
+        height: 100%;
+    }
 
     .container {
+        display: flex;
+        min-height: 1920px;
+    }
+
+
+    .content {
+        margin-top: 60px;
+        padding: 0 40px;
         min-width: 1000px;
     }
 
@@ -375,7 +430,6 @@
         display: flex;
         padding: 10px;
     }
-
 
     .send_button {
         width: 150px;
@@ -394,10 +448,56 @@
     .context_wapper .demo-split-pane {
         height: 100%;
     }
-    .CodeMirror pre{
+
+    .CodeMirror pre {
         text-align: left !important;;
     }
-    .ivu-split-trigger-con{
-        display: none !important;
+
+    .d2h-code-side-linenumber{
+        position: unset;
     }
+    .ivu-split-horizontal .ivu-split-trigger-con{
+        height: unset;
+    }
+    .d2h-info {
+         background-color: transparent;
+         color: rgba(0, 0, 0, 0.3);
+         border-color: #d5e4f2;
+    }
+    .nav{
+        width: 100%;
+        height: 100%;
+        overflow: scroll;
+        position: relative;
+    }
+    .subnav{
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 200px;
+        height: 40px;
+        color: white;
+        font-size: 18px;
+        padding: 10px 20px;
+        background: dodgerblue;
+    }
+    .historyWapper{
+        margin-top: 40px;
+        padding: 0 5px;
+    }
+    .history{
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid #dfddcc;
+        color: black;
+    }
+    .history:hover{
+        color: white;
+        background: #5A6173;
+    }
+    .history div{
+        width: 100%;
+        text-align: left;
+    }
+
 </style>
